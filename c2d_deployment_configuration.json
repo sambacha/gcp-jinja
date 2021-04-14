@@ -1,0 +1,7 @@
+{
+  "defaultDeploymentType": "SINGLE_VM",
+  "imageName": "dockercompose-ubun20-03122020",
+  "projectId": "cloud-infra-services-public",
+  "templateName": "nonexistent_template",
+  "useSolutionPackage": true
+}

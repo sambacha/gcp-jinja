@@ -1,0 +1,8 @@
+imports:
+- path: docker-compose-ubuntu20.jinja
+
+resources:
+- name: docker-compose-ubuntu20
+  type: docker-compose-ubuntu20.jinja
+  properties:
+    zone: us-central1-f

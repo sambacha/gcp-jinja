@@ -1,0 +1,180 @@
+description:
+  author:
+    title: Cloud Infrastructure Services
+    descriptionHtml: >-
+      We are Microsoft partners and offer a selection of IaaS solutions to get
+      your cloud environment setup and running securely and efficient.
+    shortDescription: >-
+      We are Microsoft partners and offer a selection of IaaS solutions to get
+      your cloud environment setup and running securely and efficient.
+  descriptionHtml: >-
+    <b>Docker Compose Server on Ubuntu Server 20.04</b>
+
+    <P>
+
+    Docker Compose is a tool for defining and running multi-container Docker
+    applications. With Compose, you use a YAML file to configure your
+    applications services. Then, with a single command, you create and start all
+    the services from your configuration.</P>
+
+    <P>
+
+    Docker compose is a simple yet powerful tool that is used to run multiple
+    containers as a single service. For example, suppose you have an application
+    which requires Nginx as a web server and PostgreSQL as a database service.
+    In this case by docker-compose, you can create one single file
+    (docker-compose.yml ) which will create both the containers as a single
+    service without starting each separately</p>
+
+    <p>
+
+    When you're developing software, the ability to run an application in an
+    isolated environment and interact with it is crucial. The Compose command
+    line tool can be used to create the environment and interact with it.</p>
+
+    <p>
+
+    The Compose file provides a way to document and configure all of the
+    applications service dependencies (databases, queues, caches, web service
+    APIs, etc). Using the Compose command line tool you can create and start one
+    or more containers for each dependency with a single command (docker-compose
+    up).</p>
+
+    <p>
+
+    <b>Docker Compose Features</b>
+
+    <li>Multiple isolated environments on a single Docker host</li>
+
+    <li>Preserve volume data when containers are created</li>
+
+    <li>Only recreate containers that have changed</li>
+
+    <li>Variables and moving a composition between environments</li>
+
+    <li>Docker Engine</li>
+
+    <li>You can run Compose apps on a Swarm cluster</li>
+
+    </p>
+
+    <p>
+
+    <b>Docker Documentation</b>
+
+    </p>
+
+    <p>
+
+    Follow our post configuration steps on - <a
+    href="https://cloudinfrastructureservices.co.uk/how-to-setup-docker-compose-on-ubuntu-in-azure-aws-gcp/"
+    target="_blank">Setup Docker Compose on GCP</a>
+
+    </p>
+
+    <b>Disclaimer:</b> Docker is a registered  trademark of Docker Inc and is
+    licensed under Apache LicenseV2. No warrantee of any kind, express or
+    implied, is included with this software.
+  logo: '@media/docker-compose-ubuntu20_store.png'
+  tagline: Run multiple containers as a single service
+  title: Docker Compose Server on Ubuntu Server 20.04
+  url: >-
+    https://cloudinfrastructureservices.co.uk/how-to-setup-docker-compose-on-ubuntu-in-azure-aws-gcp/
+  version: 0.0.1
+  eulaUrl: 'https://github.com/docker/compose/blob/master/LICENSE'
+  documentations:
+    - title: Run Docker Compose on GCP
+      url: >-
+        https://cloudinfrastructureservices.co.uk/how-to-setup-docker-compose-on-ubuntu-in-azure-aws-gcp/
+      destinations:
+        - DESTINATION_SOLUTION_DETAILS
+        - DESTINATION_POST_DEPLOY
+  support:
+    - title: Support
+      descriptionHtml: Please contact us via our website for any support questions
+      url: >-
+        https://cloudinfrastructureservices.co.uk/how-to-setup-docker-compose-on-ubuntu-in-azure-aws-gcp/
+  icon: '@media/docker-compose-ubuntu20_small.png'
+  softwareGroups:
+    - type: SOFTWARE_GROUP_OS
+      software:
+        - title: Ubuntu Server
+          version: 20.04 LTS
+input:
+  properties:
+    - name: zone
+      title: Zone
+    - name: machineType
+      title: Machine type
+    - name: bootDiskType
+      title: Boot disk type
+      section: BOOT_DISK
+    - name: bootDiskSizeGb
+      title: Boot disk size in GB
+      section: BOOT_DISK
+    - name: network
+      title: Network name
+      section: NETWORKING
+    - name: subnetwork
+      title: Subnetwork name
+      section: NETWORKING
+    - name: externalIP
+      title: External IP
+      tooltip: >-
+        An external IP address associated with this instance. Selecting "None"
+        will result in the instance having no external internet access. <a
+        href="https://cloud.google.com/compute/docs/configure-instance-ip-addresses">Learn
+        more</a>
+      section: NETWORKING
+    - name: ipForward
+      title: IP forwarding
+      tooltip: >-
+        Forwarding allows the instance to help route packets. <a
+        href="https://cloud.google.com/compute/docs/networking#canipforward">Learn
+        more</a>
+      section: NETWORKING
+      level: 1
+  sections:
+    - name: BOOT_DISK
+      title: Boot Disk
+      tooltip: Each instance requires a disk to boot from.
+    - name: NETWORKING
+      title: Networking
+runtime:
+  deployingMessage: Deployment can take several minutes to complete.
+  applicationTable:
+    rows:
+      - label: Instance
+        value: >-
+          <a href="{{ consoleUrl(outputs().vmSelfLink) }}">{{ outputs().vmName
+          }}</a>
+      - label: Instance zone
+        value: '{{ properties().zone }}'
+      - label: Instance machine type
+        value: '{{ properties().machineType }}'
+  primaryButton:
+    label: SSH
+    type: TYPE_GCE_VM_SSH
+    action: '{{ outputs().vmSelfLink }}'
+  suggestedActions:
+    - heading: No external IP configured
+      description: >-
+        The VM instance has been configured with no external IP or internet
+        access. Connecting to it directly may not be possible. Consider using a
+        <a
+        href="https://cloud.google.com/compute/docs/instances/connecting-advanced#bastion_host">bastion
+        host</a> to access this VM.
+      showIf: '{{ !outputs().hasExternalIP }}'
+    - heading: Assign a static external IP address to your VM instance
+      description: >-
+        An ephemeral external IP address has been assigned to the VM instance.
+        If you require a static external IP address, you may promote the address
+        to static. <a
+        href="https://cloud.google.com/compute/docs/instances-and-network#promote_ephemeral_ip">Learn
+        more</a>
+      showIf: '{{ outputs().hasExternalIP }}'
+annotations:
+  autogenSpecType: SINGLE_VM
+  vmImage0: >-
+    https://www.googleapis.com/compute/v1/projects/cloud-infra-services-public/global/images/dockercompose-ubun20-03122020
+metadata_version: v1
